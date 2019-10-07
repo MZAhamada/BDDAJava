@@ -1,9 +1,17 @@
 public class DBDef {
 	// ajouter un cstr si beesoin
+
+	private DBDef() {
+	}
+	private static DBDef INSTANCE = new DBDef();
+
+	public static DBDef getInstance()
+	{   return INSTANCE;
+	}
 	
 	private RelDef [] dbDef;
 	private int cptRelEntier=0;
-	/*private static final instance = new DBDef();
+	/*private final instance = new DBDef();
 	
 	private DBDef(RelDef [] dbDef,int cptRelEntier) {
 		this.dbDef = dbDef;
@@ -17,15 +25,15 @@ public class DBDef {
 	*/
 	
 	
-	public static void init(){ 
+	public void init(){
 		
 	}
 	
-	public static void finish() {
+	public void finish() {
 		
 	}
 	
-	public /*static*/ void addRel (RelDef relation) {
+	public void addRel (RelDef relation) {
 		dbDef[cptRelEntier++] = relation ;
 		
 	}
