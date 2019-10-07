@@ -1,9 +1,8 @@
-
 public class DBDef {
 	// ajouter un cstr si beesoin
 	
-	RelDef [] dbDef;
-	int cptRelEntier;
+	private RelDef [] dbDef;
+	private int cptRelEntier=0;
 	/*private static final instance = new DBDef();
 	
 	private DBDef(RelDef [] dbDef,int cptRelEntier) {

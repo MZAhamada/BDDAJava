@@ -1,4 +1,3 @@
-
 public class RelDef {
 	
 	private String nomDeRelation;
