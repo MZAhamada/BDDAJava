@@ -3,8 +3,12 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 public class DiskManager {
 
+	private DiskManager() {
+	}
+	private static DiskManager INSTANCE = new DiskManager();
+
 	public void CreateFile(int fileIdx) {
-		String nomfichier = "Data_"+fileIdx;
+		String nomfichier = "Data_"+fileIdx+".rf";
 		try { 
 			RandomAccessFile rf = new RandomAccessFile(nomfichier,"rw");
 			rf.close();
@@ -13,7 +17,7 @@ public class DiskManager {
 	}
 	public PageId AddPage(int fileIdx) {
 		
-		String nomfichier = "Data_"+fileIdx;
+		String nomfichier = "Data_"+fileIdx+".rf";
 		PageId pageid  = null;
 		try { 
 			RandomAccessFile rf = new RandomAccessFile(nomfichier,"rw");
@@ -48,5 +52,8 @@ public class DiskManager {
 			rf.close();
 		}
 	    catch(IOException e) {e.printStackTrace();}
+	}
+	public static DiskManager getInstance()
+	{   return INSTANCE;
 	}
 }

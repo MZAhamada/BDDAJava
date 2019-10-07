@@ -7,20 +7,20 @@ public class DBManager {
 	}
 	private static DBManager INSTANCE = new DBManager();
 	
-	public static RelDef createRelation (String nomRel,int nbCol, String [] typeCol) {
+	public RelDef createRelation (String nomRel,int nbCol, String [] typeCol) {
 		RelDef relation = new RelDef(nomRel,nbCol,typeCol);
 		return relation;
 	}
 	
-	public static void init() {
+	public void init() {
 		/*
 		 * saisie();
 		 */
-		DBDef.init();
+		DBDef.getInstance().init();
 	}
 	
 	public void finish() {
-		DBDef.finish();
+		DBDef.getInstance().finish();
 	}
 	
 	public void processCommand(String s) { //ptt return String plus tard
@@ -39,6 +39,7 @@ public class DBManager {
 				 * stocker dans des cases differentes les RelDef
 				 */
 				String nomRelation = st.nextToken();
+				// Chaine de caractere de taille fixe TP1 J1
 				int nbColonne = Integer.parseInt(st.nextToken());
 				String[] typeCol = new String[nbColonne];
 				for (int i=0;i<nbColonne;i++) {
@@ -59,7 +60,7 @@ public class DBManager {
     }
 	
 	/*
-	public static String saisie() {
+	public  String saisie() {
 		Scanner sc = new Scanner (System.in);
 		String s = sc.nextLine();
 		sc.close();

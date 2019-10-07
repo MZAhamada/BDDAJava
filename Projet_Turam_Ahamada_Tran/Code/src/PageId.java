@@ -2,6 +2,8 @@
 public class PageId {
 	private long FileIdx;
 	private long PageIdx;
+	private long pinCount = 0;
+	private long flagDirty = 0;
 	
 	
 	public PageId(long FileIdx,long PageIdx) {
@@ -9,15 +11,28 @@ public class PageId {
 		this.FileIdx = FileIdx;
 	}
 
+	public long getFlagDirty() {
+		return flagDirty;
+	}
 
+	public void setFlagDirty(long flagDirty) {
+		this.flagDirty = flagDirty;
+	}
 
+	public long getPinCount() {
+		return pinCount;
+	}
+
+	public void setPinCount(long pinCount) {
+		this.pinCount = pinCount;
+	}
 
 	public long getFileIdx() {
 		return FileIdx;
 	}
 
 	public String getFileName() {
-		String nomfichier = "Data_"+FileIdx;
+		String nomfichier = "Data_"+FileIdx+".rf";
 		return nomfichier;
 	}
 
