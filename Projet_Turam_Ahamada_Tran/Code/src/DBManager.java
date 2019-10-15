@@ -1,4 +1,5 @@
-import java.util.Scanner;
+package manager;
+
 import java.util.StringTokenizer;
 
 public class DBManager {
@@ -7,7 +8,7 @@ public class DBManager {
 	}
 	private static DBManager INSTANCE = new DBManager();
 	
-	public RelDef createRelation (String nomRel,int nbCol, String [] typeCol) {
+	public RelDef createRelation (String nomRel, int nbCol, String [] typeCol) {
 		RelDef relation = new RelDef(nomRel,nbCol,typeCol);
 		return relation;
 	}
@@ -21,6 +22,7 @@ public class DBManager {
 	
 	public void finish() {
 		DBDef.getInstance().finish();
+		BufferManager.getInstance().FlushAll();
 	}
 	
 	public void processCommand(String s) { //ptt return String plus tard
@@ -36,7 +38,7 @@ public class DBManager {
 				/*
 				 * if hasmoretoken error ( on peut le mettre dès l'entrée du nb de colonne)
 				 * appeler le constructeur de reldef
-				 * stocker dans des cases differentes les RelDef
+				 * stocker dans des cases differentes les manager.RelDef
 				 */
 				String nomRelation = st.nextToken();
 				// Chaine de caractere de taille fixe TP1 J1

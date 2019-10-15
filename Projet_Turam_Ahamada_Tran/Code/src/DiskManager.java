@@ -1,4 +1,5 @@
-import java.nio.ByteBuffer;
+package manager;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 public class DiskManager {
@@ -23,16 +24,16 @@ public class DiskManager {
 			RandomAccessFile rf = new RandomAccessFile(nomfichier,"rw");
 		
 			long taille = rf.length();
-			rf.setLength(taille+Constants.pageSize);
+			rf.setLength(taille+ Constants.pageSize);
 			// .seek si besoin
-			pageid = new PageId(fileIdx,(taille/Constants.pageSize)-1);
+			pageid = new PageId(fileIdx,((int)taille/Constants.pageSize)-1);
 			rf.close();
 		}
 	    catch(IOException e) {e.printStackTrace();}
 		return pageid;
 	}
 	
-	public void ReadPage(PageId PageId,byte[] buff) {
+	public void ReadPage(PageId PageId, byte[] buff) {
 		String nomfichier = PageId.getFileName();
 		try { 
 			RandomAccessFile rf = new RandomAccessFile(nomfichier,"rw");
@@ -43,7 +44,7 @@ public class DiskManager {
 		}
 	    catch(IOException e) {e.printStackTrace();}
 	}
-	public void WritePage(PageId PageId,byte[] buff) {
+	public void WritePage(PageId PageId, byte[] buff) {
 		String nomfichier = PageId.getFileName();
 		try { 
 			RandomAccessFile rf = new RandomAccessFile(nomfichier,"rw");

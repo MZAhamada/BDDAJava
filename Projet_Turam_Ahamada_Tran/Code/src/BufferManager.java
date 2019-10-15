@@ -1,3 +1,4 @@
+package manager;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -34,10 +35,7 @@ public class BufferManager {
 			frames[0].setBuff(buff);
 		}
 
-
 		return buff;
-
-
 	}
 	
 	public void FreePage(PageId pageId,boolean valdirty) {
@@ -58,14 +56,14 @@ public class BufferManager {
 
 	}
 	public void FlushAll() {
-        for(int i = 0; i<frames.length; i++)
-        {
-            if(!frames[i].isFlagDirty()) {
-                frames[i].setPinCount(0);
-                frames[i].setFlagDirty(true);
-                frames[i].setBuff(null);
-            }
-        }
-    }
+		for(int i = 0; i<frames.length; i++)
+		{
+			if(!frames[i].isFlagDirty()) {
+				frames[i].setPinCount(0);
+				frames[i].setFlagDirty(true);
+				frames[i].setBuff(null);
+			}
+		}
+	}
 
 }

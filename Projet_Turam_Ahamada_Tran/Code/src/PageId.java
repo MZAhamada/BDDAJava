@@ -1,30 +1,14 @@
+package manager;
 
 public class PageId {
-	private long FileIdx;
-	private long PageIdx;
-	private long pinCount = 0;
-	private long flagDirty = 0;
+	private int FileIdx;
+	private int PageIdx;
+
 	
 	
-	public PageId(long FileIdx,long PageIdx) {
+	public PageId(int FileIdx, int PageIdx) {
 		this.PageIdx = PageIdx;
 		this.FileIdx = FileIdx;
-	}
-
-	public long getFlagDirty() {
-		return flagDirty;
-	}
-
-	public void setFlagDirty(long flagDirty) {
-		this.flagDirty = flagDirty;
-	}
-
-	public long getPinCount() {
-		return pinCount;
-	}
-
-	public void setPinCount(long pinCount) {
-		this.pinCount = pinCount;
 	}
 
 	public long getFileIdx() {
@@ -37,24 +21,9 @@ public class PageId {
 	}
 
 
-	public void setFileIdx(long fileIdx) {
-		FileIdx = fileIdx;
-	}
-
-
-
-
 	public long getPageIdx() {
 		return PageIdx;
 	}
-
-
-
-
-	public void setPageIdx(long pageIdx) {
-		PageIdx = pageIdx;
-	}
-
 
 
 

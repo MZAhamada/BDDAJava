@@ -1,8 +1,10 @@
+package manager;
+
 public class Frame {
 
     private int pinCount = 0;
     private boolean flagDirty = false;
-    private byte[] buff = new byte[(int)Constants.pageSize];
+    private byte[] buff = new byte[(int) Constants.pageSize];
     private PageId pageId = null;
 
     public int getPinCount() {
