@@ -17,8 +17,8 @@ public class Record {
         int pos = position;
         for(int i=0; i<values.length;i++){
             if(values[i] instanceof Integer) {
-                float f = (int)values[i];
-                buffer.putInt(pos,f);
+                int j = (int)values[i];
+                buffer.putInt(pos,j);
                 pos = buffer.position();
                 }
             if (values[i] instanceof String) {
@@ -42,39 +42,60 @@ public class Record {
     public void readFromBuffer(byte[] buff,int position) {
         ByteBuffer buffer = ByteBuffer.wrap(buff);
         int pos = position;
-        int compteur = 0;
         String s;
         Integer j;
         Float f;
-        RelDef[] reldef = DBDef.getInstance().getReldef();
-////// pas fini 
-        for(int i=0;i<reldef.length;i++){
-            if(reldef[compteur].getTypeCol()[compteur].charAt(0)=='i'){
-                // compteur et compteur ?
-                j = buffer.getInt();
+        String[] typeCol= this.relDef.getTypeCol();
+
+        for(int i=0;i<typeCol.length;i++) {
+            if (typeCol[i].charAt(0) == 'i') {
+                j = buffer.getInt(pos);
                 pos = buffer.position();
-                values[compteur]=j;
+                values[i] = j;
             }
-            if(reldef[compteur].getTypeCol()[compteur].charAt(0)=='f'){
-                f = buffer.getFloat();
+            if (typeCol[i].charAt(0) == 'f') {
+                f = buffer.getFloat(pos);
                 pos = buffer.position();
-                values[compteur]=f;
+                values[i] = f;
+            }
+
+            if (typeCol[i].charAt(0) == 's') {
+                String si = typeCol[i];
+                int w = si.charAt(si.length() - 1);
+                for (int k = 0; k < w; k++) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(buffer.getChar(pos));
+                    pos = buffer.position();
+                    si = sb.toString();
+                }
+                values[i] = si;
             }
 
         }
 
-        if(reldef[compteur].getTypeCol()[compteur].charAt(0)=='f'){
-            String si = reldef[compteur].getTypeCol()[compteur];
-            int w = si.charAt(si.length());
-            for(int i=0;i<w;i++){
-            StringBuffer sb = new StringBuffer();
-            sb.append(buffer.getChar());
-            si = sb.toString();
+
+    }
+
+    // Peut etre qu'ils seront pas placé dans cette classe.
+    public static int recordSize(String[] s){
+        int recordSize = 0;
+        for(int i =0;i<s.length;i++){
+
+            if (s[i].charAt(0) == 'i') {
+                recordSize+=4;
             }
-            pos = buffer.position();
-            values[compteur]=s;
+            if (s[i].charAt(0) == 'f') {
+                int w = s[i].charAt(s[i].length() - 1);
+                recordSize+=4*w;
+            }
+            if (s[i].charAt(0) == 's') {
+                recordSize+=4;
+            }
         }
-
-
+        return recordSize;
+    }
+    // ??????
+    public static int slotCount(String[] s){
+        return Constants.pageSize*slotCount(s);
     }
 }
