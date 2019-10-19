@@ -1,9 +1,12 @@
 package manager;
 
-public class DBDef {
+import java.io.*;
+
+public class DBDef implements Serializable {
 	// ajouter un cstr si beesoin
 	int compteur = 0;
 	RelDef[] reldef = new RelDef[10];
+
 
 
 	private DBDef() {
@@ -16,6 +19,11 @@ public class DBDef {
 	
 	private RelDef [] dbDef;
 	private int cptRelEntier=0;
+	// modifié pour rendre plus propre
+	File fichier = new File("Catalog.def");
+	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichier));
+	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichier));
+
 	/*private final instance = new manager.DBDef();
 	
 	private manager.DBDef(manager.RelDef [] dbDef,int cptRelEntier) {
@@ -46,15 +54,29 @@ public class DBDef {
 	}
 
 	public void init(){
-		
+		try{
+			INSTANCE = (DBDef)ois.readObject();
+			oos.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void finish() {
-		
+		try{
+			oos.writeObject(INSTANCE);
+			oos.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void addRel (RelDef relation) {
 		dbDef[cptRelEntier++] = relation ;
 		
 	}
+
+
 }
