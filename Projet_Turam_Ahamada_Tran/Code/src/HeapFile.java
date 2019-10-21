@@ -1,7 +1,5 @@
 package manager;
 
-import java.nio.Buffer;
-
 public class HeapFile {
     RelDef relDef;
 
@@ -16,4 +14,6 @@ public class HeapFile {
         BufferManager.getInstance().FreePage(pageid,false);
 
     }
+    
+    
 }
