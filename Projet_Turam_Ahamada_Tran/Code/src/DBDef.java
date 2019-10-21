@@ -6,8 +6,8 @@ public class DBDef implements Serializable {
 	// ajouter un cstr si beesoin
 	int compteur = 0;
 	RelDef[] reldef = new RelDef[10];
-
-
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
 
 	private DBDef() {
 	}
@@ -16,16 +16,29 @@ public class DBDef implements Serializable {
 	public static DBDef getInstance()
 	{   return INSTANCE;
 	}
-	
+
 	private RelDef [] dbDef;
 	private int cptRelEntier=0;
 	// modifié pour rendre plus propre
 	File fichier = new File("Catalog.def");
-	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichier));
-	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichier));
+	{
+		try{
+			oos = new ObjectOutputStream(new FileOutputStream(fichier));
+		}catch(IOException e) {
+			System.out.println("Le flux de sortie n'a pas été créé");
+		}
+	}
+	{
+		try {
+			ois = new ObjectInputStream(new FileInputStream(fichier));
+		}catch(IOException e)
+		{
+			System.out.println("Le flux d'entrée n'a pas été créé");
+		}
+	}
 
 	/*private final instance = new manager.DBDef();
-	
+
 	private manager.DBDef(manager.RelDef [] dbDef,int cptRelEntier) {
 		this.dbDef = dbDef;
 		this.cptRelEntier = cptRelEntier;
@@ -34,8 +47,8 @@ public class DBDef implements Serializable {
 		this.dbDef = new manager.RelDef[100];
 		this.cptRelEntier = 0;
 	}
-	
-	*/
+
+	 */
 
 	public int getCompteur() {
 		return compteur;
@@ -62,7 +75,7 @@ public class DBDef implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void finish() {
 		try{
 			oos.writeObject(INSTANCE);
@@ -72,10 +85,10 @@ public class DBDef implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addRel (RelDef relation) {
 		dbDef[cptRelEntier++] = relation ;
-		
+
 	}
 
 
