@@ -75,27 +75,4 @@ public class Record {
 
 
     }
-
-    // Peut etre qu'ils seront pas placé dans cette classe.
-    public static int recordSize(String[] s){
-        int recordSize = 0;
-        for(int i =0;i<s.length;i++){
-
-            if (s[i].charAt(0) == 'i') {
-                recordSize+=4;
-            }
-            if (s[i].charAt(0) == 'f') {
-                int w = s[i].charAt(s[i].length() - 1);
-                recordSize+=4*w;
-            }
-            if (s[i].charAt(0) == 's') {
-                recordSize+=4;
-            }
-        }
-        return recordSize;
-    }
-    // ??????
-    public static long slotCount(String[] s){
-        return Constants.pageSize*slotCount(s);
-    }
 }
