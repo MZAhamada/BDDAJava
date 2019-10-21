@@ -95,7 +95,7 @@ public class Record {
         return recordSize;
     }
     // ??????
-    public static int slotCount(String[] s){
+    public static long slotCount(String[] s){
         return Constants.pageSize*slotCount(s);
     }
 }
