@@ -4,29 +4,34 @@ import java.io.RandomAccessFile;
 
 public class BufferManager {
 
-	private Frame[] frames = new Frame[Constants.frameCount];
+	private Frame[] frames;
 	private BufferManager() {
+		frames = new Frame[Constants.frameCount];
+		for(int i=0;i<Constants.frameCount;i++){
+			frames[i]= new Frame();
+		}
 	}
 	private static BufferManager INSTANCE = new BufferManager();
 	
-	public static BufferManager getInstance()
-    {   return INSTANCE;
+	public static BufferManager getInstance() {
+		return INSTANCE;
     }
 	
 	public byte[] GetPage(PageId pageId) {
 		byte[] buff = new byte[(int)Constants.pageSize];
 		boolean modifie = false;
+		boolean isHere=false;
 		for (int i=0; (i<frames.length);i++){
+			if (isHere == false) {
+				if (frames[i].getPageId() == pageId) {
+					isHere = true;
+				}
+			}
 			if(frames[i].getPageId()==null){
-				frames[i].setPinCount(frames[i].getPinCount() + 1);
+				frames[i].setPinCount(1);
 				DiskManager.getInstance().ReadPage(pageId,buff);
 				frames[i].setBuff(buff);
 				frames[i].setPageId(pageId);
-				modifie = true;
-			}
-
-			if(frames[i].getPageId()==pageId){
-				frames[i].setPinCount(frames[i].getPinCount() + 1);
 				modifie = true;
 			}
 		}
