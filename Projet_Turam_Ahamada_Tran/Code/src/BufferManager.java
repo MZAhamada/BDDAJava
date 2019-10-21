@@ -1,18 +1,19 @@
 package manager;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class BufferManager {
 
-	private Frame[] frames = new Frame[Constants.frameCount];
+	private Frame[] frames = new Frame[(int) Constants.frameCount];
 	private BufferManager() {
 	}
 	private static BufferManager INSTANCE = new BufferManager();
-	
+
 	public static BufferManager getInstance()
-    {   return INSTANCE;
-    }
-	
+	{   return INSTANCE;
+	}
+
 	public byte[] GetPage(PageId pageId) {
 		boolean modifie = false;
 		byte[] buff = new byte[(int)Constants.pageSize];
@@ -35,9 +36,12 @@ public class BufferManager {
 			frames[0].setBuff(buff);
 		}
 
+
 		return buff;
+
+
 	}
-	
+
 	public void FreePage(PageId pageId,boolean valdirty) {
 
 		for (int i=0; (i<frames.length);i++) {
@@ -53,8 +57,8 @@ public class BufferManager {
 			}
 		}
 
-
 	}
+
 	public void FlushAll() {
 		for(int i = 0; i<frames.length; i++)
 		{
@@ -65,5 +69,4 @@ public class BufferManager {
 			}
 		}
 	}
-
 }
