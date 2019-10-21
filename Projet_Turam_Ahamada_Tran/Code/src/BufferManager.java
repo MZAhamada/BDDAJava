@@ -1,47 +1,43 @@
 package manager;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class BufferManager {
 
-	private Frame[] frames = new Frame[(int) Constants.frameCount];
+	private Frame[] frames = new Frame[Constants.frameCount];
 	private BufferManager() {
 	}
 	private static BufferManager INSTANCE = new BufferManager();
-
+	
 	public static BufferManager getInstance()
-	{   return INSTANCE;
-	}
-
+    {   return INSTANCE;
+    }
+	
 	public byte[] GetPage(PageId pageId) {
-		boolean modifie = false;
 		byte[] buff = new byte[(int)Constants.pageSize];
-
-		for (int i=0; (i<frames.length)&&(modifie==false);i++) {
-			if (pageId.getPageIdx() == frames[i].getPageId().getPageIdx()) {
+		boolean modifie = false;
+		for (int i=0; (i<frames.length);i++){
+			if(frames[i].getPageId()==null){
 				frames[i].setPinCount(frames[i].getPinCount() + 1);
 				DiskManager.getInstance().ReadPage(pageId,buff);
-				frames[0].setBuff(buff);
+				frames[i].setBuff(buff);
+				frames[i].setPageId(pageId);
+				modifie = true;
+			}
+
+			if(frames[i].getPageId()==pageId){
+				frames[i].setPinCount(frames[i].getPinCount() + 1);
 				modifie = true;
 			}
 		}
-		if (modifie == false){
-			/*
-			Changer intelligement en fonction de flag dirty avec les algorithmes LRU ou Clock
-			 */
-			frames[0].setPageId(pageId);
-			frames[0].setPinCount(1);
-			DiskManager.getInstance().ReadPage(pageId,buff);
-			frames[0].setBuff(buff);
+		if(modifie){
+			// faire la clock ou lru mdr
+
 		}
 
-
 		return buff;
-
-
 	}
-
+	
 	public void FreePage(PageId pageId,boolean valdirty) {
 
 		for (int i=0; (i<frames.length);i++) {
@@ -57,8 +53,8 @@ public class BufferManager {
 			}
 		}
 
-	}
 
+	}
 	public void FlushAll() {
 		for(int i = 0; i<frames.length; i++)
 		{
@@ -69,4 +65,5 @@ public class BufferManager {
 			}
 		}
 	}
+
 }
