@@ -1,6 +1,6 @@
 package manager;
 
 public class Constants {
-	public final static int pageSize = 4096;
-	public final static int frameCount = 2;
+	public final static long pageSize = 4;
+	public final static long frameCount = 2;
 }
