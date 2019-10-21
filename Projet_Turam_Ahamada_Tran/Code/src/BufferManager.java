@@ -19,24 +19,22 @@ public class BufferManager {
 	
 	public byte[] GetPage(PageId pageId) {
 		byte[] buff = new byte[(int)Constants.pageSize];
-		boolean modifie = false;
-		boolean isHere=false;
+		boolean modifie = true;
 		for (int i=0; (i<frames.length);i++){
-			if (isHere == false) {
 				if (frames[i].getPageId() == pageId) {
-					isHere = true;
-				}
+					frames[i].setPinCount(frames[i].getPinCount()+1);
+					modifie = false;
 			}
 			if(frames[i].getPageId()==null){
 				frames[i].setPinCount(1);
 				DiskManager.getInstance().ReadPage(pageId,buff);
 				frames[i].setBuff(buff);
 				frames[i].setPageId(pageId);
-				modifie = true;
+				modifie = false;
 			}
 		}
 		if(modifie){
-			// faire la clock ou lru mdr
+			// faire la clock ou lru mdr pour remplacer une page dans le frames
 
 		}
 
